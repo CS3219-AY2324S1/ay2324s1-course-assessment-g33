@@ -3,10 +3,13 @@ import Match from "../components/services/Match";
 import Question from "../components/services/Question";
 import QuestionOTD from "../components/services/QuestionOTD";
 import { SnackBarContext } from "../contexts/SnackBarContext";
-import { useContext } from "react";
+import { FirebaseContext } from "../contexts/FirebaseContext";
+import { useContext, useEffect } from "react";
 
 export default function Dashboard() {
   const { openSnackBar, setOpenSnackBar, sb } = useContext(SnackBarContext);
+  const { currentName, currentUser, isAdmin, checkDetails } =
+    useContext(FirebaseContext);
 
   const handleCloseSnackBar = (event, reason) => {
     if (reason === "clickaway") {
@@ -14,6 +17,9 @@ export default function Dashboard() {
     }
     setOpenSnackBar(false);
   };
+
+  window.onload = checkDetails(currentUser);
+
   return (
     <>
       <SnackBar
@@ -29,6 +35,9 @@ export default function Dashboard() {
         </div>
         <Question />
       </div>
+      <div>{JSON.stringify(currentUser.uid)}</div>
+      <div>{JSON.stringify(isAdmin)}</div>
+      <div>{JSON.stringify(currentName)}</div>
     </>
   );
 }

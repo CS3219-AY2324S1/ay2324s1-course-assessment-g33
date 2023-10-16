@@ -14,6 +14,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { SnackBarContext } from "../../contexts/SnackBarContext";
 import { ModeContext } from "../../contexts/ModeContext";
+import { FirebaseContext } from "../../contexts/FirebaseContext";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import { Button, useTheme } from "@mui/material";
@@ -29,6 +30,7 @@ function Header() {
   const [anchorElUser, setAnchorElUser] = useState(null);
   const { setOpenSnackBar, setSB } = useContext(SnackBarContext);
   const { mode, setMode } = useContext(ModeContext);
+  const { log_out } = useContext(FirebaseContext);
   const navigate = useNavigate();
   const theme = useTheme();
   const { userInfo } = useSelector((state) => state.auth);
@@ -236,7 +238,9 @@ function Header() {
                     key={setting}
                     onClick={() =>
                       setting.toLowerCase() === "logout"
-                        ? dispatch(logout()) && handleCloseUserMenu(setting)
+                        ? dispatch(logout()) &&
+                          log_out() &&
+                          handleCloseUserMenu(setting)
                         : handleCloseUserMenu(setting)
                     }
                   >
