@@ -46,7 +46,7 @@ export default function UpdateProfile() {
       }
     }
     handleClose();
-    window.location.reload();
+    //window.location.reload();
   }
 
   return (

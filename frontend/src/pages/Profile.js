@@ -9,13 +9,13 @@ import UpdateProfile from "./UpdateProfile";
 import { FirebaseContext } from "../contexts/FirebaseContext";
 
 const Profile = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { userInfo } = useSelector((state) => state.auth);
   const { currentName, currentUser, image, checkDetails } =
     useContext(FirebaseContext);
 
   useEffect(() => {
-    checkDetails(currentUser).then(setLoading(false));
+    checkDetails(currentUser); //.then(setLoading(false));
   });
 
   return (
