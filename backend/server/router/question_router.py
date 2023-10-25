@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from config import get_config
 import requests
+from model.question import Question
 from model.judge import Submission
 
 router = APIRouter(
@@ -35,11 +36,29 @@ async def get_question_problem(titleSlug):
         return response.json()
     except Exception as e:
         return e
-
-@router.delete("/title/{title}")
-async def delete_question(title):
+    
+@router.post("/create")
+async def add_question_to_db(question: Question):
     try:
-        response = requests.delete(config.question_service_url + f"/title/{title}")
+        print(question.dict())
+        response = requests.post(config.question_service_url + "/create", json = question.dict())
+        return response.json()
+    except Exception as e:
+        return e
+    
+@router.post("/update/{titleSlug}")
+async def update_question(question: Question, titleSlug):
+    try:
+        print(titleSlug)
+        response = requests.post(config.question_service_url + f"/update/{titleSlug}", json = question.dict())
+        return response.json()
+    except Exception as e:
+        return e
+    
+@router.delete("/title/{titleSlug}")
+async def delete_question(titleSlug):
+    try:
+        response = requests.delete(config.question_service_url + f"/title/{titleSlug}")
         return response.json()
     except Exception as e:
         return e

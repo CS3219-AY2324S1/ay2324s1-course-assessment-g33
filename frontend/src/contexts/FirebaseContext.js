@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { auth, fs } from "../components/services/Firebase";
+import { auth, fs } from "../firebase";
 import { collection, doc, setDoc, getDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 import {
@@ -68,12 +68,19 @@ export function FirebaseProvider({ children }) {
     });
   };
 
-  const getImage = (user) => {
+  const getImage = async (user) => {
     console.log("getting image");
-    getDownloadURL(ref(storage, user.uid)).then((url) => {
-      console.log(url);
-      setImage(url);
-    });
+    const image = ref(storage, user.uid);
+    const dummy = ref(storage, "placeholder.png");
+    try {
+      await getDownloadURL(image).then((url) => {
+        setImage(url);
+      });
+    } catch (e) {
+      await getDownloadURL(dummy).then((url) => {
+        setImage(url);
+      });
+    }
   };
 
   const log_out = async () => {

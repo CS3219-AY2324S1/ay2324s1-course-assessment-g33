@@ -21,6 +21,8 @@ import ProtectedRoute from "./components/routing/ProtectedRoutes";
 import SignUp from "./pages/SignUp";
 import { ProblemProvider } from "./contexts/ProblemContext";
 import { FirebaseProvider } from "./contexts/FirebaseContext";
+import CreateQuestion from "./pages/CreateQuestion";
+import EditQuestion from "./pages/EditQuestion";
 
 function App() {
   const { mode } = useContext(ModeContext);
@@ -150,6 +152,12 @@ function App() {
                       {/* </Route> */}
                       <Route exact path="/" element={<Login />} />
                       <Route exact path="/signup" element={<SignUp />} />
+                      <Route
+                        exact
+                        path="/create"
+                        element={<CreateQuestion />}
+                      />
+                      <Route exact path="/edit" element={<EditQuestion />} />
                       <Route path="*" element={<Navigate to="/" replace />} />
                     </Routes>
                   </ProblemProvider>

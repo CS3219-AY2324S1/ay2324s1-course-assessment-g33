@@ -54,7 +54,7 @@ export default function WebSocket() {
   }, [newMessage]);
 
   useEffect(() => {
-    //socket.connect(); //uncomment later
+    socket.connect(); //uncomment later
     socket.on("connect", onConnect);
     socket.on("disconnect", onDisconnect);
     socket.on("match-success", onMatchSuccess);

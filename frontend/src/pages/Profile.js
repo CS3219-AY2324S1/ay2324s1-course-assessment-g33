@@ -4,19 +4,30 @@ import "../css/profile.scss";
 import "bootstrap/dist/css/bootstrap.min.css";
 import dpimage from "../assets/test_dp.jpeg";
 import actimage from "../assets/test_activity.png";
+import SnackBar from "../components/common/SnackBar";
 import RecentTable from "../components/services/RecentTable";
 import UpdateProfile from "./UpdateProfile";
+import { SnackBarContext } from "../contexts/SnackBarContext";
 import { FirebaseContext } from "../contexts/FirebaseContext";
 
 const Profile = () => {
   const [loading, setLoading] = useState(false);
   const { userInfo } = useSelector((state) => state.auth);
+  const { sb, setSB, openSnackBar, setOpenSnackBar } =
+    useContext(SnackBarContext);
   const { currentName, currentUser, image, checkDetails } =
     useContext(FirebaseContext);
 
   useEffect(() => {
     checkDetails(currentUser); //.then(setLoading(false));
   });
+
+  const handleCloseSnackBar = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackBar(false);
+  };
 
   return (
     // <div>
@@ -27,6 +38,12 @@ const Profile = () => {
     //   </span>
     // </div>
     <div className="profile">
+      {/* <SnackBar
+        msg={sb.msg}
+        handleCloseSnackBar={handleCloseSnackBar}
+        openSnackBar={openSnackBar}
+        severity={sb.severity}
+      /> */}
       {!loading ? (
         <div id="top-container">
           <div id="left-container" className="subcontainer">
