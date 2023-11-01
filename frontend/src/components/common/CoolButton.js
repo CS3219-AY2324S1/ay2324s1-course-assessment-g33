@@ -9,7 +9,7 @@ function CoolButton(props) {
 	const { mode } = useContext(ModeContext);
 	return (
 		<button
-			class="pushable"
+			className="pushable"
 			style={{
 				color: "white",
 				background: disabled
@@ -25,7 +25,7 @@ function CoolButton(props) {
 			disabled={disabled}
 		>
 			<span
-				class="front"
+				className="front"
 				style={{
 					background: disabled
 						? grey[600]
@@ -41,11 +41,7 @@ function CoolButton(props) {
 						<LoadingIcon text={text} />
 					</div>
 				) : (
-					<span
-						style={{ color: mode === "dark" ? "white" : "black" }}
-					>
-						{text}
-					</span>
+					<span style={{ color: mode === "dark" ? "white" : "black" }}>{text}</span>
 				)}
 			</span>
 		</button>

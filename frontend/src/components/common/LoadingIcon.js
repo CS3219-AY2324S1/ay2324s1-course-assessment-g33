@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Countdown from "react-countdown";
 import { MATCHMAKING_TIMEOUT } from "../../utils/constants";
 import { CircularProgress } from "@mui/material";
-import React, { useEffect } from "react";
+import React from "react";
 
 function LoadingIcon({ text }) {
 	return (

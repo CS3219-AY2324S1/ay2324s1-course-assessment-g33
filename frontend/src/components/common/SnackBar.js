@@ -29,7 +29,7 @@ export default function SnackBar(props) {
 		>
 			<Alert
 				onClose={handleCloseSnackBar}
-				severity={severity}
+				severity={severity || "success"}
 				sx={{ width: "100%", color: "secondary.contrastText" }}
 				variant="filled"
 			>

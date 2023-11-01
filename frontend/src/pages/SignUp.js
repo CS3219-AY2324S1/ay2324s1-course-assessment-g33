@@ -11,83 +11,76 @@ import { FirebaseContext } from "../contexts/FirebaseContext";
 import { useNavigate } from "react-router";
 
 function SignUp() {
-  const { loading, userInfo, error, success } = useSelector(
-    (state) => state.auth
-  );
-  const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
-  const { sb, setSB, openSnackBar, setOpenSnackBar } =
-    useContext(SnackBarContext);
-  const { signup } = useContext(FirebaseContext);
-  const navigate = useNavigate();
+	const { loading, error } = useSelector((state) => state.auth);
+	const dispatch = useDispatch();
+	const { register, handleSubmit } = useForm();
+	const { sb, setSB, openSnackBar, setOpenSnackBar } = useContext(SnackBarContext);
+	const { signup } = useContext(FirebaseContext);
+	const navigate = useNavigate();
 
-  const handleCloseSnackBar = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setOpenSnackBar(false);
-  };
+	const handleCloseSnackBar = (event, reason) => {
+		if (reason === "clickaway") {
+			return;
+		}
+		setOpenSnackBar(false);
+	};
 
-  const submitForm = async (data) => {
-    // check if passwords match
-    if (data.password !== data.confirmPassword) {
-      setSB({ msg: "Password mismatched", severity: "error" });
-      setOpenSnackBar(true);
-      return;
-    }
-    // transform email string to lowercase to avoid case sensitivity issues in login
-    data.email = data.email.toLowerCase();
-    try {
-      dispatch(registerUser(data));
-      await signup(data.email, data.password);
-      setSB({ msg: "Successfully registered", severity: "success" });
-      setOpenSnackBar(true);
-      navigate("/login");
-    } catch (e) {
-      console.log(e.code);
-      switch (e.code) {
-        case "auth/weak-password":
-          setSB({
-            msg: "Password must be at least 6 characters",
-            severity: "error",
-          });
-          break;
-        case "auth/email-already-in-use":
-          setSB({
-            msg: "Email is already in use",
-            severity: "error",
-          });
-          break;
-        default:
-          setSB({ msg: "An error occured", severity: "error" });
-          break;
-      }
-      setOpenSnackBar(true);
-    }
-  };
+	const submitForm = async (data) => {
+		// check if passwords match
+		if (data.password !== data.confirmPassword) {
+			setSB({ msg: "Password mismatched", severity: "error" });
+			setOpenSnackBar(true);
+			return;
+		}
+		// transform email string to lowercase to avoid case sensitivity issues in login
+		data.email = data.email.toLowerCase();
+		try {
+			dispatch(registerUser(data));
+			await signup(data.email, data.password);
+			setSB({ msg: "Successfully registered", severity: "success" });
+			setOpenSnackBar(true);
+			navigate("/login");
+		} catch (e) {
+			console.log(e.code);
+			switch (e.code) {
+				case "auth/weak-password":
+					setSB({
+						msg: "Password must be at least 6 characters",
+						severity: "error",
+					});
+					break;
+				case "auth/email-already-in-use":
+					setSB({
+						msg: "Email is already in use",
+						severity: "error",
+					});
+					break;
+				default:
+					setSB({ msg: "An error occured", severity: "error" });
+					break;
+			}
+			setOpenSnackBar(true);
+		}
+	};
 
-  return (
-    <section>
-      <SnackBar
-        msg={sb.msg}
-        handleCloseSnackBar={handleCloseSnackBar}
-        openSnackBar={openSnackBar}
-        severity={sb.severity}
-      />
-      <div className="signup-container">
-        <div className="col-2">
-          <img src={bgimage} alt="" />
-        </div>
+	return (
+		<section>
+			<SnackBar
+				msg={sb.msg}
+				handleCloseSnackBar={handleCloseSnackBar}
+				openSnackBar={openSnackBar}
+				severity={sb.severity}
+			/>
+			<div className="signup-container">
+				<div className="col-2">
+					<img src={bgimage} alt="" />
+				</div>
 
 				<div className="col-1">
 					<h2>Sign Up</h2>
 					<span>Get yourself prepared for Tech Interview</span>
 
-					<form
-						id="form"
-						className="flex flex-col"
-						onSubmit={handleSubmit(submitForm)}
-					>
+					<form id="form" className="flex flex-col" onSubmit={handleSubmit(submitForm)}>
 						{error && <div>{error}</div>}
 						<input
 							type="text"

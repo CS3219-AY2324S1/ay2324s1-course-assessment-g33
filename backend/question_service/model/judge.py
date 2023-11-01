@@ -14,7 +14,7 @@ class SubmissionStatus(BaseModel):
     description: str
 
 class JudgeOutput(BaseModel):
-    stdout: str
+    stdout: Union[str, None]
     time: float
     memory: int
     stderr: Union[str, None]

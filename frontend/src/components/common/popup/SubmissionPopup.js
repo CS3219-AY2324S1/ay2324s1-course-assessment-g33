@@ -1,7 +1,7 @@
 import { Box, IconButton, Modal, Typography } from "@mui/material";
 import { Editor } from "@monaco-editor/react";
 import CloseIcon from "@mui/icons-material/Close";
-import { EDITOR_SUPPORTED_LANGUAGES } from "../../utils/constants";
+import { EDITOR_SUPPORTED_LANGUAGES } from "../../../utils/constants";
 import React, { useCallback, useRef } from "react";
 
 function SubmissionPopup(props) {
